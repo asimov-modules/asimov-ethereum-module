@@ -1,14 +1,19 @@
-# ASIMOV Template Module
+# ASIMOV Ethereum Module
 
 [![License](https://img.shields.io/badge/license-Public%20Domain-blue.svg)](https://unlicense.org)
-[![Package on Crates.io](https://img.shields.io/crates/v/asimov-template-module)](https://crates.io/crates/asimov-template-module)
-[![Documentation](https://docs.rs/asimov-template-module/badge.svg)](https://docs.rs/asimov-template-module)
+[![Package on Crates.io](https://img.shields.io/crates/v/asimov-ethereum-module.svg)](https://crates.io/crates/asimov-ethereum-module)
+[![Package on PyPI](https://img.shields.io/pypi/v/asimov-ethereum-module.svg)](https://pypi.org/project/asimov-ethereum-module)
+[![Package on RubyGems](https://img.shields.io/gem/v/asimov-ethereum-module.svg)](https://rubygems.org/gems/asimov-ethereum-module)
+[![Package on NPM](https://img.shields.io/npm/v/asimov-ethereum-module.svg)](https://npmjs.com/package/asimov-ethereum-module)
 
-[ASIMOV] module template. Fork this to create your own module!
+[ASIMOV] module for data import from the [Ethereum] blockchain network.
 
 ## ✨ Features
 
-- To be determined!
+- Imports structured data from [Ethereum] blocks and transactions.
+- Supports mainnet, [Sepolia], and [Holesky] networks.
+- Collects raw JSON data via public Ethereum JSON-RPC endpoints.
+- Distributed as a standalone static binary with zero runtime dependencies.
 
 ## 🛠️ Prerequisites
 
@@ -16,66 +21,83 @@
 
 ## ⬇️ Installation
 
-### Installation with the [ASIMOV CLI]
+### Installation from PyPI
 
 ```bash
-asimov module install template -v
+pip install -U asimov-ethereum-module
+```
+
+### Installation from RubyGems
+
+```bash
+gem install asimov-ethereum-module
+```
+
+### Installation from NPM
+
+```bash
+npm install -g asimov-ethereum-module
 ```
 
 ### Installation from Source Code
 
 ```bash
-cargo install asimov-template-module
+cargo install asimov-ethereum-module
 ```
 
 ## 👉 Examples
 
+### Fetching Mainnet Blocks
+
 ```bash
-asimov-template-emitter
+asimov-ethereum-fetcher ethereum://mainnet/18000000
 ```
 
-## ⚙ Configuration
+### Fetching Sepolia Testnet Blocks
 
-This module requires no configuration.
+```bash
+asimov-ethereum-fetcher ethereum://sepolia/123456
+```
+
+### Fetching Holesky Testnet Blocks
+
+```bash
+asimov-ethereum-fetcher ethereum://holesky/123456
+```
 
 ## 📚 Reference
 
 ### Installed Binaries
 
-- `asimov-template-emitter`
+- `asimov-ethereum-fetcher`: collects JSON data from Ethereum JSON-RPC endpoints
 
-### `asimov-template-emitter`
+### Supported Networks
 
-```
-asimov-template-emitter
-
-Usage: asimov-template-emitter [OPTIONS]
-
-Options:
-  -d, --debug       Enable debugging output
-      --license     Show license information
-  -v, --verbose...  Enable verbose output (may be repeated for more verbosity)
-  -V, --version     Print version information
-  -h, --help        Print help
-```
+| Network | URL Scheme | RPC Endpoint |
+|---------|-----------|--------------|
+| Mainnet | `ethereum://mainnet/<height>` | ethereum.publicnode.com |
+| Sepolia | `ethereum://sepolia/<height>` | ethereum-sepolia.publicnode.com |
+| Holesky | `ethereum://holesky/<height>` | ethereum-holesky.publicnode.com |
 
 ## 👨‍💻 Development
 
 ```bash
-git clone https://github.com/asimov-modules/asimov-template-module.git
+git clone https://github.com/asimov-modules/asimov-ethereum-module.git
 ```
 
 ---
 
-[![Share on X](https://img.shields.io/badge/share%20on-x-03A9F4?logo=x)](https://x.com/intent/post?url=https://github.com/asimov-modules/asimov-template-module&text=asimov-template-module)
-[![Share on Reddit](https://img.shields.io/badge/share%20on-reddit-red?logo=reddit)](https://reddit.com/submit?url=https://github.com/asimov-modules/asimov-template-module&title=asimov-template-module)
-[![Share on Hacker News](https://img.shields.io/badge/share%20on-hn-orange?logo=ycombinator)](https://news.ycombinator.com/submitlink?u=https://github.com/asimov-modules/asimov-template-module&t=asimov-template-module)
-[![Share on Facebook](https://img.shields.io/badge/share%20on-fb-1976D2?logo=facebook)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/asimov-modules/asimov-template-module)
-[![Share on LinkedIn](https://img.shields.io/badge/share%20on-linkedin-3949AB?logo=linkedin)](https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/asimov-modules/asimov-template-module)
+[![Share on X](https://img.shields.io/badge/share%20on-x-03A9F4?logo=x)](https://x.com/intent/post?url=https://github.com/asimov-modules/asimov-ethereum-module&text=asimov-ethereum-module)
+[![Share on Reddit](https://img.shields.io/badge/share%20on-reddit-red?logo=reddit)](https://reddit.com/submit?url=https://github.com/asimov-modules/asimov-ethereum-module&title=asimov-ethereum-module)
+[![Share on Hacker News](https://img.shields.io/badge/share%20on-hn-orange?logo=ycombinator)](https://news.ycombinator.com/submitlink?u=https://github.com/asimov-modules/asimov-ethereum-module&t=asimov-ethereum-module)
+[![Share on Facebook](https://img.shields.io/badge/share%20on-fb-1976D2?logo=facebook)](https://www.facebook.com/sharer/sharer.php?u=https://github.com/asimov-modules/asimov-ethereum-module)
+[![Share on LinkedIn](https://img.shields.io/badge/share%20on-linkedin-3949AB?logo=linkedin)](https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/asimov-modules/asimov-ethereum-module)
 
-[ASIMOV]: https://asimov.sh
-[ASIMOV CLI]: https://cli.asimov.sh
-[JSON-LD]: https://json-ld.org
-[KNOW]: https://know.dev
-[RDF]: https://www.w3.org/TR/rdf12-primer/
+[ASIMOV]: https://github.com/asimov-platform
+[Ethereum]: https://ethereum.org
+[Holesky]: https://github.com/eth-clients/holesky
+[NPM]: https://npmjs.org
+[Python]: https://python.org
+[Ruby]: https://ruby-lang.org
 [Rust]: https://rust-lang.org
+[Sepolia]: https://sepolia.dev

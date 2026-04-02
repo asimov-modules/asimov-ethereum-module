@@ -1,43 +1,65 @@
 # See: https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [package]
-name = "asimov-template-module"
-version = "0.0.0"
-authors = ["ASIMOV Community"]
+name = "asimov-ethereum-module"
+version = "0.0.1"
+authors = ["ASIMOV Protocol <support@asimov.so>"]
 edition = "2024"
 #rust-version = "1.85"
-description = "ASIMOV module."
-#documentation = "https://docs.rs/asimov-template-module"
+description = "ASIMOV module for data import from the Ethereum blockchain network."
+#documentation = "https://docs.rs/asimov-ethereum-module"
 readme = true
 homepage = "https://github.com/asimov-modules"
-repository = "https://github.com/asimov-modules/asimov-template-module"
+repository = "https://github.com/asimov-modules/asimov-ethereum-module"
 license = "Unlicense"
 keywords = ["asimov-module", "asimov", "ai"]
-categories = ["command-line-utilities", "text-processing"]              # TODO
-publish = false
+categories = [
+  "command-line-utilities",
+  "api-bindings",
+  "web-programming::http-client",
+  "text-processing",
+]
+publish = true
 
 [features]
 default = ["all", "cli", "std"]
-all = ["pretty", "tracing"]
-cli = ["asimov-module/cli", "std", "dep:clap", "dep:clientele"]
-std = ["asimov-module/std", "clap?/std", "clientele?/std"]
-unstable = []
-
-# Optional features:
+all = ["tracing"]
+cli = ["asimov-module/cli", "dep:clap", "dep:clientele", "pretty", "std"]
 pretty = []
-tracing = ["asimov-module/tracing", "clientele?/tracing"]
+std = [
+  "asimov-module/std",
+  "clientele/std",
+  "serde/std",
+  "tracing-subscriber?/fmt",
+  "tracing-subscriber?/std",
+  "url/std",
+]
+tracing = ["dep:tracing-subscriber", "asimov-module/tracing"]
+unstable = []
+clap = ["dep:clap"]
 
 [dependencies]
 asimov-module = { version = "25.0.0-dev.21", default-features = false }
-
-# Optional integrations:
 clap = { version = "4.5", default-features = false, features = [
   "std",
 ], optional = true }
-clientele = { version = "0.3.8", default-features = false, features = [
-  "clap",
-  "std",
+clientele = { version = "0.3", default-features = false, features = [
+  "argfile",
+  "dotenv",
+  "wild",
 ], optional = true }
+serde = { version = "1", default-features = false, features = ["derive"] }
+serde_json = { version = "1", default-features = false, features = ["alloc"] }
+tracing-subscriber = { version = "0.3", default-features = false, features = [
+  "alloc",
+  "tracing-log",
+], optional = true }
+ureq = { version = "3.0", default-features = false, features = [
+  "platform-verifier",
+  "rustls",
+  "json",
+] }
+url = { version = "2.5", default-features = false }
 
 [profile.release]
 opt-level = "z"
@@ -45,6 +67,6 @@ strip = true
 lto = "thin"
 
 [[bin]]
-name = "asimov-template-emitter"
-path = "src/emitter/main.rs"
+name = "asimov-ethereum-fetcher"
+path = "src/fetcher/main.rs"
 required-features = ["cli"]
