@@ -25,28 +25,21 @@ fn main() -> Result<clientele::SysexitsError, Box<dyn std::error::Error>> {
     use serde_json;
     use std::io::stdout;
 
-    // Load environment variables from `.env`:
     clientele::dotenv().ok();
 
-    // Expand wildcards and @argfiles:
     let args = asimov_module::args_os()?;
-
-    // Parse command-line options:
     let options = Options::parse_from(args);
 
-    // Handle the `--version` flag:
     if options.flags.version {
         println!("{} {}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
         return Ok(EX_OK);
     }
 
-    // Handle the `--license` flag:
     if options.flags.license {
         print!("{}", include_str!("../../UNLICENSE"));
         return Ok(EX_OK);
     }
 
-    // Configure logging & tracing:
     #[cfg(feature = "tracing")]
     asimov_module::init_tracing_subscriber(&options.flags).expect("failed to initialize logging");
 
@@ -55,10 +48,8 @@ fn main() -> Result<clientele::SysexitsError, Box<dyn std::error::Error>> {
     }
 
     let mut stdout = stdout().lock();
-
     let output_jsonl = options.output.as_deref() == Some("jsonl");
 
-    // Process each of the given URL arguments:
     for url in options.urls {
         let block: BlockUrl = url.parse()?;
         let block_json = block.fetch()?;
@@ -72,7 +63,6 @@ fn main() -> Result<clientele::SysexitsError, Box<dyn std::error::Error>> {
 
         match writeln!(&mut stdout, "{}", &line) {
             Ok(_) => (),
-            // break as we can't write to stdout:
             Err(err) if err.kind() == std::io::ErrorKind::BrokenPipe => break,
             Err(err) => return Err(err.into()),
         }
